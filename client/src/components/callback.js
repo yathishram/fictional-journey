@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Magic } from 'magic-sdk';
 import { OAuthExtension } from '@magic-ext/oauth';
 import Layout from './layout';
-
+import {ethers} from 'ethers'
 const Callback = (props) => {
   const [magic, setMagic] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
@@ -18,6 +18,7 @@ const Callback = (props) => {
     /* if `provider` is in our query params, the user is logging in with a social provider */
     let provider = new URLSearchParams(props.location.search).get('provider');
     if (magic) {
+      props.setWeb3Provider(new ethers.providers.Web3Provider(magic.rpcProvider))
       provider ? finishSocialLogin() : finishEmailRedirectLogin();
     }
   }, [magic, props.location.search]);

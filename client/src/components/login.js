@@ -2,27 +2,26 @@ import { useState, useEffect } from 'react';
 import { Magic } from 'magic-sdk';
 import { useUser } from '../lib/hooks';
 import { OAuthExtension } from '@magic-ext/oauth';
-import { WebAuthnExtension } from '@magic-ext/webauthn';
 import Layout from './layout';
 import Form from './form';
 import { useHistory } from 'react-router-dom';
 import SocialLogins from './social-logins';
 
-const Login = () => {
+const Login = ({magic}) => {
   useUser({ redirectTo: '/', redirectIfFound: true });
   const history = useHistory();
-  const [magic, setMagic] = useState(null);
+  //const [magic, setMagic] = useState(null);
   const [disabled, setDisabled] = useState(false);
 
-  useEffect(() => {
-    !magic &&
-      setMagic(
-        new Magic(process.env.REACT_APP_MAGIC_PUBLISHABLE_KEY, {
-          extensions: [new OAuthExtension(), new WebAuthnExtension()],
-        })
-      );
-    magic?.preload();
-  }, [magic]);
+  // useEffect(() => {
+  //   !magic &&
+  //     setMagic(
+  //       new Magic(process.env.REACT_APP_MAGIC_PUBLISHABLE_KEY, {
+  //         extensions: [new OAuthExtension(), new WebAuthnExtension()],
+  //       })
+  //     );
+  //   magic?.preload();
+  // }, [magic]);
 
   async function handleLoginWithEmail(email) {
     try {
@@ -81,7 +80,6 @@ const Login = () => {
         <Form
           disabled={disabled}
           onEmailSubmit={handleLoginWithEmail}
-          onWebauthnSubmit={handleLoginWithWebauthn}
         />
         <SocialLogins onSubmit={handleLoginWithSocial} />
       </div>

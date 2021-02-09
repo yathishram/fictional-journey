@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Webauthn from './webauthn';
 import { validateEmail } from '../lib/helpers';
 import { Input, Icon, MonochromeIcons, useToast, CallToAction } from '@magiclabs/ui';
 
@@ -40,7 +39,6 @@ const Form = ({ onEmailSubmit, disabled, onWebauthnSubmit }) => {
           >
             Send Magic Link
           </CallToAction>
-          <Webauthn onSubmit={onWebauthnSubmit} email={email} addToast={addToast} />
         </div>
       </form>
       <style>{`
