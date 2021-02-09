@@ -3,13 +3,16 @@ import { Magic } from 'magic-sdk';
 import { OAuthExtension } from '@magic-ext/oauth';
 import Layout from './layout';
 import {ethers} from 'ethers'
+import { generateIDX } from '../lib/ceramic';
+
 const Callback = (props) => {
   const [magic, setMagic] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [showValidatingToken, setShowValidatingToken] = useState(false);
 
   useEffect(() => {
-    !magic &&
+    async function load(){
+      !magic &&
       setMagic(
         new Magic(process.env.REACT_APP_MAGIC_PUBLISHABLE_KEY, {
           extensions: [new OAuthExtension()],
@@ -18,9 +21,15 @@ const Callback = (props) => {
     /* if `provider` is in our query params, the user is logging in with a social provider */
     let provider = new URLSearchParams(props.location.search).get('provider');
     if (magic) {
-      props.setWeb3Provider(new ethers.providers.Web3Provider(magic.rpcProvider))
+      const web3provider = new ethers.providers.Web3Provider(magic.rpcProvider)
+      props.setWeb3Provider(web3provider)
       provider ? finishSocialLogin() : finishEmailRedirectLogin();
+      const {idx, ceramic} = await generateIDX(web3provider)
+        props.setIdx(idx)
+        props.setCeramic(ceramic)
     }
+    }
+    load()
   }, [magic, props.location.search]);
 
   const finishEmailRedirectLogin = async () => {

@@ -5,6 +5,7 @@
 
 # misc
 .DS_Store
+.env
 .eslintcache
 
 npm-debug.log*
