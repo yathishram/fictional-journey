@@ -1,7 +1,3 @@
-# Demo
-
-https://magic-react-express.herokuapp.com/login
-
 # Quick Start Instructions
 
 #### Start server
@@ -9,8 +5,8 @@ https://magic-react-express.herokuapp.com/login
 ```txt
 $ git clone https://github.com/magiclabs/example-react-express.git
 $ cd example-react-express
-$ mv .env.example .env
-$ yarn install
+$ add your magic.link keys in .env files
+$ npm install
 $ node server.js
 ```
 
@@ -18,9 +14,9 @@ $ node server.js
 
 ```txt
 $ cd client
-$ mv .env.example .env
-$ yarn install
-$ yarn start
+$ add your magic.link keys in .env files
+$ npm install
+$ npm start
 ```
 
 # .env Files
